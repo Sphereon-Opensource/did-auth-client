@@ -13,5 +13,6 @@ class KUtilsTest {
         val issuerDid = "did:ethr:0x88ed694ffe9244e2993d2932638a5c736371fc04"
         val jwt = createJwtSync(payload, issuerDid, privateKey)
         assert(jwt.isNotEmpty())
+        println(jwt)
     }
 }
