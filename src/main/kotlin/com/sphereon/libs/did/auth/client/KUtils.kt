@@ -14,3 +14,10 @@ fun createJwtSync(payload: Map<String, Any>, issuerDid: String, signerPK: String
     }
     res.await()
 }
+
+fun verifyJwtSync(token: String, auth: Boolean, audience: String) = runBlocking {
+    val res = GlobalScope.async {
+        JWTTools().verify(token, auth, audience)
+    }
+    res.await()
+}
