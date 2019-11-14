@@ -8,7 +8,7 @@ import java.util.Map;
 import static com.sphereon.libs.did.auth.client.KUtilsKt.decodeRawJwtPayload;
 
 public class DidAuthUtils {
-    public static boolean wellFormedJwtLoginRequest(JwtPayload jwtPayload) throws MalformedLoginJwtException{
+    public static boolean wellFormedJwtLoginRequest(JwtPayload jwtPayload) throws MalformedLoginJwtException {
         if (jwtPayload.getReq() == null) {
             throw new MalformedLoginJwtException("Could not retrieve original request");
         }

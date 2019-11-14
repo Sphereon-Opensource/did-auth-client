@@ -5,7 +5,7 @@ import me.uport.sdk.jwt.model.JwtPayload
 import org.junit.Test
 
 class KUtilsTest {
-//TODO: revise tests once we have working token examples
+    //TODO: revise tests once we have working token examples
     @Test
     fun `check if createJwtSync function works`() {
         val payload = mapOf(
@@ -20,7 +20,8 @@ class KUtilsTest {
 
     @Test
     fun `check if decodeJwtSync function works`() {
-        val jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NkstUiJ9.eyJyZXF1ZXN0ZWQiOiJuYW1lIiwiaWF0IjoxNTczNjU5Mjk3LCJleHAiOjE1NzM2NTk1OTcsImlzcyI6ImRpZDpldGhyOjB4ODhlZDY5NGZmZTkyNDRlMjk5M2QyOTMyNjM4YTVjNzM2MzcxZmMwNCJ9.qQgSTxRBbNrTXxtkF7AysvsENgNlPOjWcWr9o3SRewB680CvQWXLjsdd3Afb-Z5PsbvqbFcI0jp-mcLCEMtPzQA"
+        val jwt =
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NkstUiJ9.eyJyZXF1ZXN0ZWQiOiJuYW1lIiwiaWF0IjoxNTczNjU5Mjk3LCJleHAiOjE1NzM2NTk1OTcsImlzcyI6ImRpZDpldGhyOjB4ODhlZDY5NGZmZTkyNDRlMjk5M2QyOTMyNjM4YTVjNzM2MzcxZmMwNCJ9.qQgSTxRBbNrTXxtkF7AysvsENgNlPOjWcWr9o3SRewB680CvQWXLjsdd3Afb-Z5PsbvqbFcI0jp-mcLCEMtPzQA"
         println(JWTTools().decodeRaw(jwt))
     }
 

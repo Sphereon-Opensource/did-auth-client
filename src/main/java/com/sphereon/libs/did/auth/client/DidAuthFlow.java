@@ -9,12 +9,10 @@ import me.uport.sdk.jwt.model.JwtHeader;
 import me.uport.sdk.jwt.model.JwtPayload;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.http.HttpResponse;
-import java.util.Map;
-import java.util.Objects;
 
-import static com.sphereon.libs.did.auth.client.KUtilsKt.*;
+import static com.sphereon.libs.did.auth.client.KUtilsKt.decodeJwtPayload;
+import static com.sphereon.libs.did.auth.client.KUtilsKt.verifyJwtSync;
 import static com.sphereon.libs.did.auth.client.utils.DidAuthUtils.wellFormedJwtLoginRequest;
 
 public class DidAuthFlow {

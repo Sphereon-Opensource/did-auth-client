@@ -7,8 +7,6 @@ import com.sphereon.sdk.did.mapping.handler.ApiException;
 import com.sphereon.sdk.did.mapping.model.DidInfo;
 import com.sphereon.sdk.did.mapping.model.DidMappingResponse;
 
-import java.util.Objects;
-
 public class DidMappingService {
     private final DidMapControllerApi didMapControllerApi;
 

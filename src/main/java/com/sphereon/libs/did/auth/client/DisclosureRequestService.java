@@ -14,12 +14,12 @@ public class DisclosureRequestService {
         this.appSecret = appSecret;
     }
 
-    public String createDisclosureRequest(String recipientDid){
-        Map<String,Object> claims = generateClaims(recipientDid);
+    public String createDisclosureRequest(String recipientDid) {
+        Map<String, Object> claims = generateClaims(recipientDid);
         return createJwtSync(claims, appDid, appSecret);
     }
 
-    public String getAppDid(){
+    public String getAppDid() {
         return appDid;
     }
 
