@@ -1,16 +1,7 @@
 # repo-specific config
 publish.properties
 
-
 # Created by https://www.gitignore.io/api/linux,macos,gradle,windows,android,androidstudio
-
-### Android ###
-# Built application files
-*.apk
-*.ap_
-
-# Files for the ART/Dalvik VM
-*.dex
 
 # Java class files
 *.class
@@ -33,12 +24,6 @@ proguard/
 # Log Files
 *.log
 
-# Android Studio Navigation editor temp files
-.navigation/
-
-# Android Studio captures folder
-captures/
-
 # Intellij
 *.iml
 .idea/
@@ -48,27 +33,10 @@ captures/
 .idea/dictionaries
 .idea/libraries
 
-# External native build folder generated in Android Studio 2.2 and later
-.externalNativeBuild
-
 # Freeline
 freeline.py
 freeline/
 freeline_project_description.json
-
-### Android Patch ###
-gen-external-apklibs
-
-### AndroidStudio ###
-# Covers files to be ignored for android development using Android Studio.
-
-# Built application files
-
-# Files for the ART/Dalvik VM
-
-# Java class files
-
-# Generated files
 
 # Gradle files
 .gradle
@@ -161,10 +129,6 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-
-### AndroidStudio Patch ###
-
-!/gradle/wrapper/gradle-wrapper.jar
 
 ### Linux ###
 
