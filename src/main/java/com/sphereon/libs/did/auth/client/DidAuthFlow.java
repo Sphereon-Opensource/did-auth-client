@@ -29,7 +29,7 @@ public class DidAuthFlow {
     public HttpResponse<String> dispatchLoginRequest(String appId, String userId) throws IOException, InterruptedException {
         UserInfo userInfo = didMappingService.getUserInfo(appId, userId);
         String jwt = disclosureRequestService.createDisclosureRequest(userInfo.getDid());
-        LoginRequest loginRequest = new LoginRequest(jwt, userInfo.getBoxPub(), userInfo.getPushToken());
+        var loginRequest = new LoginRequest(jwt, userInfo.getBoxPub(), userInfo.getPushToken());
         return didTransportsControllerApi.sendLoginRequest(loginRequest);
     }
 
