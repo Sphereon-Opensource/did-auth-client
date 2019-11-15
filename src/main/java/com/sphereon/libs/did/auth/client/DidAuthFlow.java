@@ -36,10 +36,10 @@ public class DidAuthFlow {
     public JwtPayload verifyLoginToken(String jwt) throws MalformedLoginJwtException {
         Triple<JwtHeader, JwtPayload, byte[]> decodedJWT = decodeJwtPayload(jwt);
         JwtPayload payload = decodedJWT.getSecond();
-        if (wellFormedJwtLoginRequest(payload)) {
-            return verifyJwtSync(jwt, true, disclosureRequestService.getAppDid());
-        } else {
+        if (!wellFormedJwtLoginRequest(payload)) {
             throw new MalformedLoginJwtException("Did in request doesn't match signature");
+
         }
+        return verifyJwtSync(jwt, true, disclosureRequestService.getAppDid());
     }
 }

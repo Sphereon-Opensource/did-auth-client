@@ -17,13 +17,15 @@ public class DidMappingService {
     public UserInfo getUserInfo(String applicationId, String userId) throws UserNotFoundException {
         try {
             DidMappingResponse didMappingResponse = didMapControllerApi.getDidMap(applicationId, userId);
-            if (didMappingResponse.getDidMaps() != null && didMappingResponse.getDidMaps().size() > 0) {
-                DidInfo didInfo = didMappingResponse.getDidMaps().get(0).getDidInfo();
-                return new UserInfo(didInfo.getDid(), didInfo.getBoxPub(), didInfo.getPushToken());
-            } else {
-                throw new RuntimeException("DidMappingResponse was null or empty when returned from did-mapping-ms for user: " + userId);
+            if (didMappingResponse.getDidMaps() == null || didMappingResponse.getDidMaps().size() == 0) {
+                throw new UserNotFoundException("DidMappingResponse was null or empty when returned from did-mapping-ms for user: " + userId);
             }
-        } catch (ApiException | RuntimeException e) {
+            DidInfo didInfo = didMappingResponse.getDidMaps().get(0).getDidInfo();
+            if (didInfo.getDid() == null || didInfo.getBoxPub() == null || didInfo.getPushToken() == null) {
+                throw new UserNotFoundException("didInfo for user " + userId + " is missing necessary information.");
+            }
+            return new UserInfo(didInfo.getDid(), didInfo.getBoxPub(), didInfo.getPushToken());
+        } catch (ApiException e) {
             throw new UserNotFoundException(e.getMessage());
         }
     }
