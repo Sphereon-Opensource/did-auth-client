@@ -13,6 +13,6 @@ public class DidAuthUtils {
             throw new MalformedLoginJwtException("Could not retrieve original request");
         }
         Map<String, Object> request = decodeRawJwtPayload(jwtPayload.getReq());
-        return ((Map) ((Map) request.get("claims")).get("user_info")).get("did").equals(jwtPayload.getIss());
+        return ((Map<String, Object>) ((Map<String, Object>) request.get("claims")).get("user_info")).get("did").equals(jwtPayload.getIss());
     }
 }
