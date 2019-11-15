@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.util.Map;
 
 import static com.sphereon.libs.did.auth.client.KUtilsKt.decodeRawJwtPayload;
-import static com.sphereon.libs.did.auth.client.KUtilsKt.generateClaims;
+import static com.sphereon.libs.did.auth.client.KUtilsKt.generatePayload;
 import static org.junit.Assert.assertEquals;
 
 public class DisclosureRequestServiceTest {
@@ -20,16 +20,18 @@ public class DisclosureRequestServiceTest {
     }
 
     @Test
-    public void claimsShouldGenerateMap() {
-        Map<String, Object> claimsMap = generateClaims("user-did");
-        Map claims = (Map) claimsMap.get("claims");
+    public void generatePayloadShouldGenerateCorrectMap() {
+        Map<String, Object> payload = generatePayload("user-did", "callback-url");
+        Map claims = (Map) payload.get("claims");
+        String callbackUrl = (String) payload.get("callback");
         Map userInfo = (Map) claims.get("user_info");
         assertEquals(userInfo.get("did"), "user-did");
+        assertEquals(callbackUrl, "callback-url");
     }
 
     @Test
     public void createDisclosureRequestShouldCreateCorrectJwtPayload() {
-        String jwt = disclosureRequestService.createDisclosureRequest("user-did");
+        String jwt = disclosureRequestService.createDisclosureRequest("user-did", "callback-url");
         Map<String, Object> jwtPayload = decodeRawJwtPayload(jwt);
         assertEquals(jwtPayload.get("iss"), "did:ethr:0x88ed694ffe9244e2993d2932638a5c736371fc04");
         assertEquals(((Map) ((Map) jwtPayload.get("claims")).get("user_info")).get("did"), "user-did");

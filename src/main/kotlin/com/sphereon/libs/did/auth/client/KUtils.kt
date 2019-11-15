@@ -34,10 +34,11 @@ fun decodeJwtPayload(jwt: String): Triple<JwtHeader, JwtPayload, ByteArray> {
 }
 
 
-fun generateClaims(recipientDid: String): Map<String, Any> {
+fun generatePayload(recipientDid: String, callbackUrl: String): Map<String, Any> {
     return mapOf(
         "claims" to mapOf(
             "user_info" to mapOf("did" to recipientDid)
-        )
+        ),
+        "callback" to callbackUrl
     )
 }

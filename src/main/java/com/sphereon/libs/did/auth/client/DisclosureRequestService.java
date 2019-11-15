@@ -3,7 +3,7 @@ package com.sphereon.libs.did.auth.client;
 import java.util.Map;
 
 import static com.sphereon.libs.did.auth.client.KUtilsKt.createJwtSync;
-import static com.sphereon.libs.did.auth.client.KUtilsKt.generateClaims;
+import static com.sphereon.libs.did.auth.client.KUtilsKt.generatePayload;
 
 public class DisclosureRequestService {
     private final String appDid;
@@ -14,8 +14,8 @@ public class DisclosureRequestService {
         this.appSecret = appSecret;
     }
 
-    public String createDisclosureRequest(String recipientDid) {
-        Map<String, Object> claims = generateClaims(recipientDid);
+    public String createDisclosureRequest(String recipientDid, String callbackUrl) {
+        Map<String, Object> claims = generatePayload(recipientDid, callbackUrl);
         return createJwtSync(claims, appDid, appSecret);
     }
 
