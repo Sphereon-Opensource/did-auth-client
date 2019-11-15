@@ -21,7 +21,7 @@ public class DisclosureRequestServiceTest {
 
     @Test
     public void claimsShouldGenerateMap() {
-        Map<String, ?> claimsMap = generateClaims("user-did");
+        Map<String, Object> claimsMap = generateClaims("user-did");
         Map claims = (Map) claimsMap.get("claims");
         Map userInfo = (Map) claims.get("user_info");
         assertEquals(userInfo.get("did"), "user-did");
@@ -30,7 +30,7 @@ public class DisclosureRequestServiceTest {
     @Test
     public void createDisclosureRequestShouldCreateCorrectJwtPayload() {
         String jwt = disclosureRequestService.createDisclosureRequest("user-did");
-        Map<String, ?> jwtPayload = decodeRawJwtPayload(jwt);
+        Map<String, Object> jwtPayload = decodeRawJwtPayload(jwt);
         assertEquals(jwtPayload.get("iss"), "did:ethr:0x88ed694ffe9244e2993d2932638a5c736371fc04");
         assertEquals(((Map) ((Map) jwtPayload.get("claims")).get("user_info")).get("did"), "user-did");
     }

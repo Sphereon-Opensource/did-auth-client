@@ -21,7 +21,7 @@ public class DidTransportsControllerApi {
     }
 
     public HttpResponse<String> sendLoginRequest(LoginRequest loginRequest) throws IOException, InterruptedException {
-        String loginVarPath = "/login";
+        var loginVarPath = "/login";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(apiBaseUrl + loginVarPath))
                 .header("Content-Type", "application/json")
