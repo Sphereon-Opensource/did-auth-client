@@ -1,5 +1,6 @@
 package com.sphereon.libs.did.auth.client
 
+import me.uport.sdk.core.SystemTimeProvider
 import me.uport.sdk.jwt.JWTTools
 import me.uport.sdk.jwt.model.JwtPayload
 import org.junit.Test
@@ -7,22 +8,24 @@ import org.junit.Test
 class KUtilsTest {
     //TODO: revise tests once we have working token examples
     @Test
-    fun `check if createJwtSync function works`() {
+    fun `createJwtSync function should return non-emptystring`() {
         val payload = mapOf(
             "requested" to "name"
         )
         val privateKey = "2106b0925c0b7486d3474ea0521f0a8750992902c7a13f02498e4066da3cf0f0"
         val issuerDid = "did:ethr:0x88ed694ffe9244e2993d2932638a5c736371fc04"
         val jwt = createJwtSync(payload, issuerDid, privateKey)
-        assert(jwt.isNotEmpty())
         println(jwt)
+        assert(jwt.isNotEmpty())
     }
 
     @Test
-    fun `check if decodeJwtSync function works`() {
+    fun `decodeJwtSync should return correct payload`() {
         val jwt =
             "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NkstUiJ9.eyJyZXF1ZXN0ZWQiOiJuYW1lIiwiaWF0IjoxNTczNjU5Mjk3LCJleHAiOjE1NzM2NTk1OTcsImlzcyI6ImRpZDpldGhyOjB4ODhlZDY5NGZmZTkyNDRlMjk5M2QyOTMyNjM4YTVjNzM2MzcxZmMwNCJ9.qQgSTxRBbNrTXxtkF7AysvsENgNlPOjWcWr9o3SRewB680CvQWXLjsdd3Afb-Z5PsbvqbFcI0jp-mcLCEMtPzQA"
-        println(JWTTools().decodeRaw(jwt))
+        val payload = decodeRawJwtPayload(jwt)
+        assert(payload["iss"] == "did:ethr:0x88ed694ffe9244e2993d2932638a5c736371fc04")
+        println(payload)
     }
 
     @Test
@@ -38,7 +41,7 @@ class KUtilsTest {
         val auth = true
         val audience = "did:ethr:0x88ed694ffe9244e2993d2932638a5c736371fc04"
 
-        val payload: JwtPayload = verifyJwtSync(token, auth, audience)
+        val payload: JwtPayload = verifyJwtSync(SystemTimeProvider, token, auth, audience)
         println(payload)
     }
 }

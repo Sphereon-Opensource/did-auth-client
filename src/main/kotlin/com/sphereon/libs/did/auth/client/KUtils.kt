@@ -3,6 +3,7 @@ package com.sphereon.libs.did.auth.client
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+import me.uport.sdk.core.ITimeProvider
 import me.uport.sdk.jwt.JWTTools
 import me.uport.sdk.jwt.model.JwtHeader
 import me.uport.sdk.jwt.model.JwtPayload
@@ -17,9 +18,9 @@ fun createJwtSync(payload: Map<String, Any>, issuerDid: String, signerSecret: St
     res.await()
 }
 
-fun verifyJwtSync(token: String, auth: Boolean, audience: String) = runBlocking {
+fun verifyJwtSync(timeProvider: ITimeProvider, token: String, auth: Boolean, audience: String) = runBlocking {
     val res = GlobalScope.async {
-        JWTTools().verify(token, auth, audience)
+        JWTTools(timeProvider).verify(token, auth, audience)
     }
     res.await()
 }
