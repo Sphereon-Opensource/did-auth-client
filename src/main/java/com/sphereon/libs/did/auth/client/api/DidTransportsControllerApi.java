@@ -14,6 +14,9 @@ public class DidTransportsControllerApi {
     private final String apiBaseUrl;
     private ObjectMapper objectMapper;
 
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final String APPLICATION_JSON = "application/json";
+
     public DidTransportsControllerApi(HttpClient httpClient, String apiBaseUrl, ObjectMapper objectMapper) {
         this.httpClient = httpClient;
         this.apiBaseUrl = apiBaseUrl;
@@ -24,7 +27,7 @@ public class DidTransportsControllerApi {
         var loginVarPath = "/login";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(apiBaseUrl + loginVarPath))
-                .header("Content-Type", "application/json")
+                .header(CONTENT_TYPE, APPLICATION_JSON)
                 .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(loginRequest)))
                 .build();
         return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
