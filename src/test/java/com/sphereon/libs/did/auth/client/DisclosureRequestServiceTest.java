@@ -34,6 +34,6 @@ public class DisclosureRequestServiceTest {
         String jwt = disclosureRequestService.createDisclosureRequest("user-did", "callback-url");
         Map<String, Object> jwtPayload = decodeRawJwtPayload(jwt);
         assertEquals(jwtPayload.get("iss"), "did:ethr:0x88ed694ffe9244e2993d2932638a5c736371fc04");
-        assertEquals(((Map) ((Map) jwtPayload.get("claims")).get("user_info")).get("did"), "user-did");
+        assertEquals(((Map<String, Object>) ((Map<String,Object>) jwtPayload.get("claims")).get("user_info")).get("did"), "user-did");
     }
 }

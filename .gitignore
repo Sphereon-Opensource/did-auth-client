@@ -33,11 +33,6 @@ proguard/
 .idea/dictionaries
 .idea/libraries
 
-# Freeline
-freeline.py
-freeline/
-freeline_project_description.json
-
 # Gradle files
 .gradle
 
@@ -59,13 +54,6 @@ freeline_project_description.json
 *.ipr
 *~
 *.swp
-
-# Android Patch
-
-# External native build folder generated in Android Studio 2.2 and later
-
-# NDK
-obj/
 
 # IntelliJ IDEA
 *.iws
