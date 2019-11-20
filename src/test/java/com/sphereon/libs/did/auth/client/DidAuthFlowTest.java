@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit.WireMockClassRule;
 import com.sphereon.libs.did.auth.client.api.DidTransportsControllerApi;
 import com.sphereon.libs.did.auth.client.exceptions.FailedTransportsException;
+import com.sphereon.libs.did.auth.client.exceptions.UserNotFoundException;
 import com.sphereon.sdk.did.mapping.api.DidMapControllerApi;
 import com.sphereon.sdk.did.mapping.handler.Configuration;
 import me.uport.sdk.core.ITimeProvider;
@@ -16,12 +17,14 @@ import org.spongycastle.util.encoders.DecoderException;
 
 import java.io.IOException;
 import java.net.http.HttpClient;
+import java.net.http.HttpResponse;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.junit.Assert.assertEquals;
 
 public class DidAuthFlowTest {
     private DidAuthFlow didAuthFlow;
+    private DidAuthFlow defaultDidAuthFlow;
     private DidMappingService didMappingService;
     private DidTransportsControllerApi didTransportsControllerApi;
     private DisclosureRequestService disclosureRequestService;
@@ -55,6 +58,7 @@ public class DidAuthFlowTest {
                 new ObjectMapper());
 
         this.disclosureRequestService = new DisclosureRequestService(appDid, appSecret);
+        this.defaultDidAuthFlow = new DidAuthFlow(didMappingService, didTransportsControllerApi, disclosureRequestService);
     }
 
     @Test
@@ -82,14 +86,18 @@ public class DidAuthFlowTest {
 
     @Test
     public void dispatchLoginRequestShouldWorkForValidLogin() throws IOException, InterruptedException {
-        didAuthFlow = getDidAuthFlowAtTime(1573814893000L);
-        didAuthFlow.dispatchLoginRequest("test-application", "test-user", "test-callback");
+        HttpResponse<String> resp = defaultDidAuthFlow.dispatchLoginRequest("test-application", "test-user", "test-callback");
+        assertEquals(resp.statusCode(), 200);
     }
 
     @Test(expected = FailedTransportsException.class)
     public void dispatchLoginRequestShouldFailForInvalidBoxPub() throws IOException, InterruptedException {
-        didAuthFlow = getDidAuthFlowAtTime(1573814893000L);
-        didAuthFlow.dispatchLoginRequest("invalid-test-application", "invalid-test-user", "test-callback");
+        defaultDidAuthFlow.dispatchLoginRequest("invalid-test-application", "invalid-test-user", "test-callback");
+    }
+
+    @Test(expected = UserNotFoundException.class)
+    public void dispatchLoginShouldFailForNonExistentUser() throws IOException, InterruptedException {
+        defaultDidAuthFlow.dispatchLoginRequest("test-application", "non-existent-user", "test-callback");
     }
 
     private DidAuthFlow getDidAuthFlowAtTime(long time) {

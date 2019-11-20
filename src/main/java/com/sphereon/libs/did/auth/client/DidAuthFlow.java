@@ -2,6 +2,7 @@ package com.sphereon.libs.did.auth.client;
 
 import com.sphereon.libs.did.auth.client.api.DidTransportsControllerApi;
 import com.sphereon.libs.did.auth.client.exceptions.MalformedLoginJwtException;
+import com.sphereon.libs.did.auth.client.exceptions.UserNotFoundException;
 import com.sphereon.libs.did.auth.client.model.LoginRequest;
 import kotlin.Triple;
 import me.uport.sdk.core.ITimeProvider;
@@ -36,10 +37,10 @@ public class DidAuthFlow {
         this.timeProvider = timeProvider;
     }
 
-    public HttpResponse<String> dispatchLoginRequest(String appId, String userId, String callbackUrl) throws IOException, InterruptedException {
+    public HttpResponse<String> dispatchLoginRequest(String appId, String userId, String callbackUrl) throws IOException, InterruptedException, UserNotFoundException {
         var userInfo = didMappingService.getUserInfo(appId, userId);
         String jwt = disclosureRequestService.createDisclosureRequest(userInfo.getDid(), callbackUrl);
-        var loginRequest = new LoginRequest(jwt, userInfo.getBoxPub(), userInfo.getPushToken());
+        var loginRequest = new LoginRequest(jwt, userInfo.getPushToken(), userInfo.getBoxPub());
         return didTransportsControllerApi.sendLoginRequest(loginRequest);
     }
 

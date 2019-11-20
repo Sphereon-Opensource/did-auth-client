@@ -10,6 +10,8 @@ repositories {
     mavenLocal()
     maven { url 'https://jitpack.io' }
     maven { url "https://kotlin.bintray.com/kotlinx" }
+    maven { url "http://nexus.qa.sphereon.com/nexus/content/repositories/sphereon-sdk-releases"}
+    maven { url "http://nexus.qa.sphereon.com/nexus/content/repositories/sphereon-sdk-snapshots"}
 }
 
 dependencies {
