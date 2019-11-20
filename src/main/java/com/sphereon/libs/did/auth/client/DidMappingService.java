@@ -17,7 +17,7 @@ public class DidMappingService {
     public UserInfo getUserInfo(String applicationId, String userId) throws UserNotFoundException {
         try {
             DidMappingResponse didMappingResponse = didMapControllerApi.getDidMap(applicationId, userId);
-            if (didMappingResponse.getDidMaps() == null || didMappingResponse.getDidMaps().size() == 0) {
+            if (didMappingResponse.getDidMaps() == null || didMappingResponse.getDidMaps().isEmpty()) {
                 throw new UserNotFoundException("DidMappingResponse was null or empty when returned from did-mapping-ms for user: " + userId);
             }
             DidInfo didInfo = didMappingResponse.getDidMaps().get(0).getDidInfo();
