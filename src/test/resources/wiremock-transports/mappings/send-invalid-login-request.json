@@ -1,0 +1,23 @@
+{
+  "request": {
+    "urlPath": "/login",
+    "method": "POST",
+    "headers": {
+      "Content-type": {
+        "equalTo":"application/json"
+      }
+    },
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": {
+          "expression": "$.boxPub",
+          "equalTo": "invalid-box-pub"
+        }
+      }
+    ]
+  },
+  "response": {
+    "status": 400,
+    "bodyFileName": "response/didtransports/invalid-encoding-response.json"
+  }
+}

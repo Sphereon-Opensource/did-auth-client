@@ -3,7 +3,6 @@ package com.sphereon.libs.did.auth.client;
 import com.sphereon.libs.did.auth.client.api.DidTransportsControllerApi;
 import com.sphereon.libs.did.auth.client.exceptions.MalformedLoginJwtException;
 import com.sphereon.libs.did.auth.client.model.LoginRequest;
-import com.sphereon.libs.did.auth.client.model.UserInfo;
 import kotlin.Triple;
 import me.uport.sdk.core.ITimeProvider;
 import me.uport.sdk.core.SystemTimeProvider;

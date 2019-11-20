@@ -20,6 +20,8 @@ dependencies {
     implementation "com.sphereon.sdk:did-mapping-sdk-java11-native:1.0-SNAPSHOT"
     testImplementation "junit:junit:4.12"
     testImplementation "com.madgag.spongycastle:core:1.58.0.0"
+    testImplementation "org.slf4j:slf4j-ext:1.7.21"
+    testCompile "com.github.tomakehurst:wiremock-jre8:2.25.1"
 }
 
 compileKotlin {

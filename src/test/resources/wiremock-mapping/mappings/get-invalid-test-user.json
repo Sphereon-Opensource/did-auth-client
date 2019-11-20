@@ -1,0 +1,10 @@
+{
+  "request": {
+    "urlPath": "/didmaps/invalid-test-application/invalid-test-user",
+    "method": "GET"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "response/didmapping/test-user.json"
+  }
+}
