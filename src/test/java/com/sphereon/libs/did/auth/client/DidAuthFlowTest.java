@@ -86,8 +86,9 @@ public class DidAuthFlowTest {
 
     @Test
     public void dispatchLoginRequestShouldWorkForValidLogin() throws IOException, InterruptedException {
-        HttpResponse<String> resp = defaultDidAuthFlow.dispatchLoginRequest("test-application", "test-user", "test-callback");
-        assertEquals(resp.statusCode(), 200);
+        didAuthFlow = getDidAuthFlowAtTime(1573914893000L);
+        String requestJwt = didAuthFlow.dispatchLoginRequest("test-application", "test-user", "test-callback");
+        assertEquals(requestJwt, "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NkstUiJ9.eyJjbGFpbXMiOnsidXNlcl9pbmZvIjp7ImRpZCI6ImRpZDpldGhyOjB4ODhlZDY5NGZmZTkyNDRlMjk5M2QyOTMyNjM4YTVjNzM2MzcxZmMwNCJ9fSwiY2FsbGJhY2siOiJ0ZXN0LWNhbGxiYWNrIiwiaWF0IjoxNTczOTE0ODkzLCJleHAiOjE1NzM5MTUxOTMsImlzcyI6ImRpZDpldGhyOjB4ODhlZDY5NGZmZTkyNDRlMjk5M2QyOTMyNjM4YTVjNzM2MzcxZmMwNCJ9.3pm6POVCQD1qEFUvNuTI4Ym9nUn5Rtrta-LIQYh0GYys9Wf7kTNFj8S7V5bqA3hw7G9m75StxJ_ASELwvgfrsQE");
     }
 
     @Test(expected = FailedTransportsException.class)

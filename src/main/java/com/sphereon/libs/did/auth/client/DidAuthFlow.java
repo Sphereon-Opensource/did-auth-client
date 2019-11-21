@@ -37,11 +37,12 @@ public class DidAuthFlow {
         this.timeProvider = timeProvider;
     }
 
-    public HttpResponse<String> dispatchLoginRequest(String appId, String userId, String callbackUrl) throws IOException, InterruptedException, UserNotFoundException {
+    public String dispatchLoginRequest(String appId, String userId, String callbackUrl) throws IOException, InterruptedException, UserNotFoundException {
         var userInfo = didMappingService.getUserInfo(appId, userId);
-        String jwt = disclosureRequestService.createDisclosureRequest(userInfo.getDid(), callbackUrl);
-        var loginRequest = new LoginRequest(jwt, userInfo.getPushToken(), userInfo.getBoxPub());
-        return didTransportsControllerApi.sendLoginRequest(loginRequest);
+        String disclosureRequestJwt = disclosureRequestService.createDisclosureRequest(timeProvider, userInfo.getDid(), callbackUrl);
+        var loginRequest = new LoginRequest(disclosureRequestJwt, userInfo.getPushToken(), userInfo.getBoxPub());
+        didTransportsControllerApi.sendLoginRequest(loginRequest);
+        return disclosureRequestJwt;
     }
 
     public JwtPayload verifyLoginToken(String jwt) throws MalformedLoginJwtException {

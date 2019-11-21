@@ -1,5 +1,7 @@
 package com.sphereon.libs.did.auth.client;
 
+import me.uport.sdk.core.ITimeProvider;
+
 import java.util.Map;
 
 import static com.sphereon.libs.did.auth.client.KUtilsKt.createJwtSync;
@@ -14,9 +16,9 @@ public class DisclosureRequestService {
         this.appSecret = appSecret;
     }
 
-    public String createDisclosureRequest(String recipientDid, String callbackUrl) {
+    public String createDisclosureRequest(ITimeProvider timeProvider, String recipientDid, String callbackUrl) {
         Map<String, Object> claims = generatePayload(recipientDid, callbackUrl);
-        return createJwtSync(claims, appDid, appSecret);
+        return createJwtSync(timeProvider, claims, appDid, appSecret);
     }
 
     public String getAppDid() {

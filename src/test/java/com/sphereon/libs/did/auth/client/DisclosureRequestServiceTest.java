@@ -1,5 +1,6 @@
 package com.sphereon.libs.did.auth.client;
 
+import me.uport.sdk.core.SystemTimeProvider;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +32,7 @@ public class DisclosureRequestServiceTest {
 
     @Test
     public void createDisclosureRequestShouldCreateCorrectJwtPayload() {
-        String jwt = disclosureRequestService.createDisclosureRequest("user-did", "callback-url");
+        String jwt = disclosureRequestService.createDisclosureRequest(SystemTimeProvider.INSTANCE,"user-did", "callback-url");
         Map<String, Object> jwtPayload = decodeRawJwtPayload(jwt);
         assertEquals(jwtPayload.get("iss"), "did:ethr:0x88ed694ffe9244e2993d2932638a5c736371fc04");
         assertEquals(((Map<String, Object>) ((Map<String,Object>) jwtPayload.get("claims")).get("user_info")).get("did"), "user-did");
