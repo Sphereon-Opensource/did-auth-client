@@ -3,6 +3,8 @@ package com.sphereon.libs.did.auth.client
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import me.uport.sdk.core.ITimeProvider
 import me.uport.sdk.jwt.JWTTools
 import me.uport.sdk.jwt.model.JwtHeader
@@ -10,7 +12,12 @@ import me.uport.sdk.jwt.model.JwtPayload
 import me.uport.sdk.signer.KPSigner
 
 
-fun createJwtSync(timeProvider: ITimeProvider, payload: Map<String, Any>, issuerDid: String, signerSecret: String): String = runBlocking {
+fun createJwtSync(
+    timeProvider: ITimeProvider,
+    payload: Map<String, Any>,
+    issuerDid: String,
+    signerSecret: String
+): String = runBlocking {
     val signer = KPSigner(signerSecret)
     val res = GlobalScope.async {
         JWTTools(timeProvider).createJWT(payload, issuerDid, signer)
@@ -19,8 +26,9 @@ fun createJwtSync(timeProvider: ITimeProvider, payload: Map<String, Any>, issuer
 }
 
 fun verifyJwtSync(timeProvider: ITimeProvider, token: String, auth: Boolean, audience: String) = runBlocking {
+    val json = Json(JsonConfiguration.Stable.copy(unquoted = true))
     val res = GlobalScope.async {
-        JWTTools(timeProvider).verify(token, auth, audience)
+        json.stringify(JwtPayload.serializer(), JWTTools(timeProvider).verify(token, auth, audience))
     }
     res.await()
 }

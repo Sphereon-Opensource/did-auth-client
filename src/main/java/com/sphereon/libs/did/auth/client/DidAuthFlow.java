@@ -45,7 +45,7 @@ public class DidAuthFlow {
         return disclosureRequestJwt;
     }
 
-    public JwtPayload verifyLoginToken(String jwt) throws MalformedLoginJwtException {
+    public String verifyLoginToken(String jwt) throws MalformedLoginJwtException {
         Triple<JwtHeader, JwtPayload, byte[]> decodedJWT = decodeJwtPayload(jwt);
         JwtPayload payload = decodedJWT.getSecond();
         assertWellFormedJwtLoginRequest(payload);
