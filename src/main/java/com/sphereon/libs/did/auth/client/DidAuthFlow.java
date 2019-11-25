@@ -39,7 +39,7 @@ public class DidAuthFlow {
 
     public HttpResponse<String> dispatchLoginRequest(String appId, String userId, String callbackUrl) throws IOException, InterruptedException, UserNotFoundException {
         var userInfo = didMappingService.getUserInfo(appId, userId);
-        String jwt = disclosureRequestService.createDisclosureRequest(userInfo.getDid(), callbackUrl);
+        String jwt = disclosureRequestService.createDisclosureRequest(timeProvider, userInfo.getDid(), callbackUrl);
         var loginRequest = new LoginRequest(jwt, userInfo.getPushToken(), userInfo.getBoxPub());
         return didTransportsControllerApi.sendLoginRequest(loginRequest);
     }

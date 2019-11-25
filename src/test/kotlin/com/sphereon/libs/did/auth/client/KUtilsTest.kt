@@ -1,5 +1,6 @@
 package com.sphereon.libs.did.auth.client
 
+import me.uport.sdk.core.ITimeProvider
 import me.uport.sdk.core.SystemTimeProvider
 import me.uport.sdk.jwt.JWTTools
 import me.uport.sdk.jwt.model.JwtPayload
@@ -14,7 +15,7 @@ class KUtilsTest {
         )
         val privateKey = "2106b0925c0b7486d3474ea0521f0a8750992902c7a13f02498e4066da3cf0f0"
         val issuerDid = "did:ethr:0x88ed694ffe9244e2993d2932638a5c736371fc04"
-        val jwt = createJwtSync(payload, issuerDid, privateKey)
+        val jwt = createJwtSync(SystemTimeProvider, payload, issuerDid, privateKey)
         println(jwt)
         assert(jwt.isNotEmpty())
     }
@@ -25,7 +26,6 @@ class KUtilsTest {
             "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NkstUiJ9.eyJyZXF1ZXN0ZWQiOiJuYW1lIiwiaWF0IjoxNTczNjU5Mjk3LCJleHAiOjE1NzM2NTk1OTcsImlzcyI6ImRpZDpldGhyOjB4ODhlZDY5NGZmZTkyNDRlMjk5M2QyOTMyNjM4YTVjNzM2MzcxZmMwNCJ9.qQgSTxRBbNrTXxtkF7AysvsENgNlPOjWcWr9o3SRewB680CvQWXLjsdd3Afb-Z5PsbvqbFcI0jp-mcLCEMtPzQA"
         val payload = decodeRawJwtPayload(jwt)
         assert(payload["iss"] == "did:ethr:0x88ed694ffe9244e2993d2932638a5c736371fc04")
-        println(payload)
     }
 
     @Test
@@ -40,8 +40,10 @@ class KUtilsTest {
                     "joiU2ZDVmZrTHBmZlZxR1ZvOTd1emxLUHZza3g1dEhOclNIeFJyUS9jTWd5Zz0iLCJpc3MiOiJkaWQ6ZXRocjoweDZkMDliMDNkMzExM2RiMDk4OWFiY2U4ZTJkNGNiZjAzYjdkODkwNzkifQ.clP8vRbF-7vemXb7oPjin0fUCmHNruOUBwXYCo2aspHbPehdF2BtwFB1_mMiBGOqhcqAR6TuCEe0cr6yxeJLAQA"
         val auth = true
         val audience = "did:ethr:0x88ed694ffe9244e2993d2932638a5c736371fc04"
+        val payload: JwtPayload = verifyJwtSync(FixedTimeProvider, token, auth, audience)
+    }
 
-        val payload: JwtPayload = verifyJwtSync(SystemTimeProvider, token, auth, audience)
-        println(payload)
+    object FixedTimeProvider : ITimeProvider {
+        override fun nowMs() = 1573739069000L
     }
 }

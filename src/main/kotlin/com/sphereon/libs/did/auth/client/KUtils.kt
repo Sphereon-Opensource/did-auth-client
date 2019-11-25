@@ -10,10 +10,10 @@ import me.uport.sdk.jwt.model.JwtPayload
 import me.uport.sdk.signer.KPSigner
 
 
-fun createJwtSync(payload: Map<String, Any>, issuerDid: String, signerSecret: String): String = runBlocking {
+fun createJwtSync(timeProvider: ITimeProvider, payload: Map<String, Any>, issuerDid: String, signerSecret: String): String = runBlocking {
     val signer = KPSigner(signerSecret)
     val res = GlobalScope.async {
-        JWTTools().createJWT(payload, issuerDid, signer)
+        JWTTools(timeProvider).createJWT(payload, issuerDid, signer)
     }
     res.await()
 }
