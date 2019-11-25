@@ -24,10 +24,7 @@ public class DidAuthFlow {
     private ITimeProvider timeProvider;
 
     public DidAuthFlow(DidMappingService didMappingService, DidTransportsControllerApi didTransportsControllerApi, DisclosureRequestService disclosureRequestService) {
-        this.didMappingService = didMappingService;
-        this.didTransportsControllerApi = didTransportsControllerApi;
-        this.disclosureRequestService = disclosureRequestService;
-        this.timeProvider = SystemTimeProvider.INSTANCE;
+        this(didMappingService, didTransportsControllerApi, disclosureRequestService, SystemTimeProvider.INSTANCE);
     }
 
     public DidAuthFlow(DidMappingService didMappingService, DidTransportsControllerApi didTransportsControllerApi, DisclosureRequestService disclosureRequestService, ITimeProvider timeProvider) {
