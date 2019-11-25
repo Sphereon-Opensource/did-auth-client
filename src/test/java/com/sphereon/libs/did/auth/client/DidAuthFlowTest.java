@@ -9,7 +9,6 @@ import com.sphereon.sdk.did.mapping.api.DidMapControllerApi;
 import com.sphereon.sdk.did.mapping.handler.Configuration;
 import me.uport.sdk.core.ITimeProvider;
 import me.uport.sdk.jwt.InvalidJWTException;
-import me.uport.sdk.jwt.model.JwtPayload;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -17,7 +16,6 @@ import org.spongycastle.util.encoders.DecoderException;
 
 import java.io.IOException;
 import java.net.http.HttpClient;
-import java.net.http.HttpResponse;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.junit.Assert.assertEquals;
