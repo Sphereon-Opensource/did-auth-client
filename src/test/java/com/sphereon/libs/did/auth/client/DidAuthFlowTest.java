@@ -120,13 +120,7 @@ public class DidAuthFlowTest {
     }
 
     private DidAuthFlow getDidAuthFlowAtTime(long time) {
-        var timeProvider = new ITimeProvider() {
-            @Override
-            public long nowMs() {
-                return time;
-            }
-        };
-        return new DidAuthFlow(didMappingService, didTransportsControllerApi, disclosureRequestService, timeProvider);
+        return new DidAuthFlow(didMappingService, didTransportsControllerApi, disclosureRequestService, () -> time);
     }
 
 }
