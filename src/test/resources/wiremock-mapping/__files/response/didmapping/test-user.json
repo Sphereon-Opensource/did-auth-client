@@ -1,0 +1,13 @@
+{
+  "didMaps": [
+    {
+      "userId": "test-user",
+      "applicationId": "test-application",
+      "didInfo": {
+        "did": "did:ethr:0x88ed694ffe9244e2993d2932638a5c736371fc04",
+        "pushToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NkstUiJ9.eyJpYXQiOjE1NzI4ODE3MTksImV4cCI6MTYwNDQxNzcxOSwiYXVkIjoiZGlkOmV0aHI6MHg4OGVkNjk0ZmZlOTI0NGUyOTkzZDI5MzI2MzhhNWM3MzYzNzFmYzA0IiwidHlwZSI6Im5vdGlmaWNhdGlvbnMiLCJ2YWx1ZSI6ImFybjphd3M6c25zOnVzLXdlc3QtMjoxMTMxOTYyMTY1NTg6ZW5kcG9pbnQvR0NNL3VQb3J0LzMzYTA5Y2U4LWZjNzMtMzYxZS04NGM2LTg3NzE1YTNlNGI1ZCIsImlzcyI6ImRpZDpldGhyOjB4NmQwOWIwM2QzMTEzZGIwOTg5YWJjZThlMmQ0Y2JmMDNiN2Q4OTA3OSJ9.8IFyb4AwucrVtaWVyeEbap-VN-MTQ8RiXZagjV-nhCh1b2dWDiYvesQtHe_oYu0bNXETzOQxbjC5AjWgUGDOXAA",
+        "boxPub": "SfCVfkLpffVqGVo97uzlKPvskx5tHNrSHxRrQ/cMgyg="
+      }
+    }
+  ]
+}

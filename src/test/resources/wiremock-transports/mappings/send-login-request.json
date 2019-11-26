@@ -1,0 +1,23 @@
+{
+  "request": {
+    "urlPath": "/login",
+    "method": "POST",
+    "headers": {
+      "Content-type": {
+        "equalTo":"application/json"
+      }
+    },
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": {
+          "expression": "$.boxPub",
+          "equalTo": "SfCVfkLpffVqGVo97uzlKPvskx5tHNrSHxRrQ/cMgyg="
+        }
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "body": "OK"
+  }
+}
