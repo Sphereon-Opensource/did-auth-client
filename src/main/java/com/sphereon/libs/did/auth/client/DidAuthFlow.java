@@ -4,6 +4,7 @@ import com.sphereon.libs.did.auth.client.api.DidTransportsControllerApi;
 import com.sphereon.libs.did.auth.client.exceptions.MalformedLoginJwtException;
 import com.sphereon.libs.did.auth.client.exceptions.UserNotFoundException;
 import com.sphereon.libs.did.auth.client.model.LoginRequest;
+import com.sphereon.sdk.did.mapping.api.DidMapControllerApi;
 import kotlin.Triple;
 import me.uport.sdk.core.ITimeProvider;
 import me.uport.sdk.core.SystemTimeProvider;
@@ -11,7 +12,6 @@ import me.uport.sdk.jwt.model.JwtHeader;
 import me.uport.sdk.jwt.model.JwtPayload;
 
 import java.io.IOException;
-import java.net.http.HttpResponse;
 
 import static com.sphereon.libs.did.auth.client.KUtilsKt.decodeJwtPayload;
 import static com.sphereon.libs.did.auth.client.KUtilsKt.verifyJwtSync;
@@ -35,6 +35,13 @@ public class DidAuthFlow {
         this.didTransportsControllerApi = didTransportsControllerApi;
         this.disclosureRequestService = disclosureRequestService;
         this.timeProvider = timeProvider;
+    }
+
+    public DidAuthFlow(DisclosureRequestService disclosureRequestService, String apiBaseUrl) {
+        DidMapControllerApi didMapControllerApi = new DidMapControllerApi();
+        didMappingService = new DidMappingService(didMapControllerApi);
+        didTransportsControllerApi = new DidTransportsControllerApi(apiBaseUrl);
+        this.disclosureRequestService = disclosureRequestService;
     }
 
     public String dispatchLoginRequest(String appId, String userId, String callbackUrl) throws IOException, InterruptedException, UserNotFoundException {
