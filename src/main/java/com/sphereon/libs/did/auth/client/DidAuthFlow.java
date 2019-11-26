@@ -49,6 +49,7 @@ public class DidAuthFlow {
         Triple<JwtHeader, JwtPayload, byte[]> decodedJWT = decodeJwtPayload(jwt);
         JwtPayload payload = decodedJWT.getSecond();
         assertWellFormedJwtLoginRequest(payload);
+        verifyJwtSync(this.timeProvider, payload.getReq(), true, disclosureRequestService.getAppDid());
         return verifyJwtSync(this.timeProvider, jwt, true, disclosureRequestService.getAppDid());
     }
 }

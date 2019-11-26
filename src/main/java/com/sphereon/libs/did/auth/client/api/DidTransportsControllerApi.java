@@ -34,10 +34,10 @@ public class DidTransportsControllerApi {
 
         HttpResponse<String> resp = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         if(resp.statusCode() != 200){
-            var msg = "Dispatch to DID Transports MS failed with HTTP Status code " + resp.statusCode();
+            var msg = "Dispatch to DID Transports MS failed with HTTP Status code " + resp.statusCode()
+                    + " and error message: " + resp.body();
             throw new FailedTransportsException(msg);
         }
         return resp;
     }
-
 }

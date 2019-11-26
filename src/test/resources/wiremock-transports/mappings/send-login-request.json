@@ -18,6 +18,6 @@
   },
   "response": {
     "status": 200,
-    "bodyFileName": "response/didtransports/login-request-response.json"
+    "body": "OK"
   }
 }

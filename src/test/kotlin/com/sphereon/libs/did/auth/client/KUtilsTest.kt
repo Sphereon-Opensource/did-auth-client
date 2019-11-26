@@ -2,7 +2,6 @@ package com.sphereon.libs.did.auth.client
 
 import me.uport.sdk.core.ITimeProvider
 import me.uport.sdk.core.SystemTimeProvider
-import me.uport.sdk.jwt.model.JwtPayload
 import org.junit.Test
 
 class KUtilsTest {

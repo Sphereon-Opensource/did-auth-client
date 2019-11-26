@@ -13,8 +13,13 @@ public class DidAuthUtils {
             throw new MalformedLoginJwtException("Could not retrieve original request");
         }
         Map<String, Object> request = decodeRawJwtPayload(jwtPayload.getReq());
-        if (!((Map<String, Object>) ((Map<String, Object>) request.get("claims")).get("user_info")).get("did").equals(jwtPayload.getIss())) {
+        boolean isDidMatchingOriginalRequest = ((Map<String, Object>) ((Map<String, Object>) request.get("claims")).get("user_info")).get("did").equals(jwtPayload.getIss());
+        if (!isDidMatchingOriginalRequest) {
             throw new MalformedLoginJwtException("DID in original request doesn't match signature in response JWT");
+        }
+        //TODO: Use configurable value of DID
+        if (!request.get("iss").equals("did:ethr:0x88ed694ffe9244e2993d2932638a5c736371fc04")) {
+            throw new MalformedLoginJwtException("Issuer in the original request doesn't match Application DID");
         }
     }
 }

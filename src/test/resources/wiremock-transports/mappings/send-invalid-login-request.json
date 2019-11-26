@@ -4,7 +4,7 @@
     "method": "POST",
     "headers": {
       "Content-type": {
-        "equalTo":"application/json"
+        "equalTo": "application/json"
       }
     },
     "bodyPatterns": [
@@ -18,6 +18,6 @@
   },
   "response": {
     "status": 400,
-    "bodyFileName": "response/didtransports/invalid-encoding-response.json"
+    "body": "invalid encoding"
   }
 }
