@@ -8,7 +8,6 @@ import com.sphereon.libs.did.auth.client.exceptions.MalformedLoginJwtException;
 import com.sphereon.libs.did.auth.client.exceptions.UserNotFoundException;
 import com.sphereon.sdk.did.mapping.api.DidMapControllerApi;
 import com.sphereon.sdk.did.mapping.handler.Configuration;
-import me.uport.sdk.core.ITimeProvider;
 import me.uport.sdk.jwt.InvalidJWTException;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -106,7 +105,7 @@ public class DidAuthFlowTest {
     public void dispatchLoginRequestShouldWorkForValidLogin() throws IOException, InterruptedException {
         didAuthFlow = getDidAuthFlowAtTime(1573914893000L);
         String requestJwt = didAuthFlow.dispatchLoginRequest("test-application", "test-user", "test-callback");
-        assertEquals(requestJwt, "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NkstUiJ9.eyJjbGFpbXMiOnsidXNlcl9pbmZvIjp7ImRpZCI6ImRpZDpldGhyOjB4ODhlZDY5NGZmZTkyNDRlMjk5M2QyOTMyNjM4YTVjNzM2MzcxZmMwNCJ9fSwiY2FsbGJhY2siOiJ0ZXN0LWNhbGxiYWNrIiwiaWF0IjoxNTczOTE0ODkzLCJleHAiOjE1NzM5MTUxOTMsImlzcyI6ImRpZDpldGhyOjB4ODhlZDY5NGZmZTkyNDRlMjk5M2QyOTMyNjM4YTVjNzM2MzcxZmMwNCJ9.3pm6POVCQD1qEFUvNuTI4Ym9nUn5Rtrta-LIQYh0GYys9Wf7kTNFj8S7V5bqA3hw7G9m75StxJ_ASELwvgfrsQE");
+        assertEquals("eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NkstUiJ9.eyJjbGFpbXMiOnsidXNlcl9pbmZvIjp7ImRpZCI6ImRpZDpldGhyOjB4ODhlZDY5NGZmZTkyNDRlMjk5M2QyOTMyNjM4YTVjNzM2MzcxZmMwNCJ9fSwiY2FsbGJhY2siOiJ0ZXN0LWNhbGxiYWNrIiwidHlwZSI6InNoYXJlUmVxIiwiaWF0IjoxNTczOTE0ODkzLCJleHAiOjE1NzM5MTUxOTMsImlzcyI6ImRpZDpldGhyOjB4ODhlZDY5NGZmZTkyNDRlMjk5M2QyOTMyNjM4YTVjNzM2MzcxZmMwNCJ9.MYgg0Et4fPnxbX0mZv0wOizaJ9a7Lih8Cpv4Oy_fb6Fiaj3tCJNOs6EM___AoLIsBxxE_y-hdHNq0yXKYD6ZMAA", requestJwt);
     }
 
     @Test(expected = FailedTransportsException.class)

@@ -5,6 +5,7 @@ import com.sphereon.libs.did.auth.client.exceptions.MalformedLoginJwtException;
 import com.sphereon.libs.did.auth.client.exceptions.UserNotFoundException;
 import com.sphereon.libs.did.auth.client.model.LoginRequest;
 import com.sphereon.sdk.did.mapping.api.DidMapControllerApi;
+import com.sphereon.sdk.did.mapping.handler.Configuration;
 import kotlin.Triple;
 import me.uport.sdk.core.ITimeProvider;
 import me.uport.sdk.core.SystemTimeProvider;
@@ -37,10 +38,13 @@ public class DidAuthFlow {
         this.timeProvider = timeProvider;
     }
 
-    public DidAuthFlow(String appId, String appSecret , String apiBaseUrl) {
-        DidMapControllerApi didMapControllerApi = new DidMapControllerApi();
+    public DidAuthFlow(String appId, String appSecret , String transportApiBaseUrl, String mappingApiBaseUrl) {
+        var apiClient = Configuration.getDefaultApiClient();
+        apiClient.setHost(mappingApiBaseUrl);
+        apiClient.setPort(8090);
+        DidMapControllerApi didMapControllerApi = new DidMapControllerApi(apiClient);
         didMappingService = new DidMappingService(didMapControllerApi);
-        didTransportsControllerApi = new DidTransportsControllerApi(apiBaseUrl);
+        didTransportsControllerApi = new DidTransportsControllerApi(transportApiBaseUrl);
         this.disclosureRequestService = new DisclosureRequestService(appId, appSecret);
     }
 
