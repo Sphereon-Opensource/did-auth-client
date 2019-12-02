@@ -8,7 +8,6 @@ import com.sphereon.libs.did.auth.client.exceptions.MalformedLoginJwtException;
 import com.sphereon.libs.did.auth.client.exceptions.UserNotFoundException;
 import com.sphereon.sdk.did.mapping.api.DidMapControllerApi;
 import com.sphereon.sdk.did.mapping.handler.Configuration;
-import me.uport.sdk.core.ITimeProvider;
 import me.uport.sdk.jwt.InvalidJWTException;
 import org.junit.Before;
 import org.junit.ClassRule;
