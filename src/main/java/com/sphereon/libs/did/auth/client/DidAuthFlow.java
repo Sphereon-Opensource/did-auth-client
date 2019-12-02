@@ -37,11 +37,11 @@ public class DidAuthFlow {
         this.timeProvider = timeProvider;
     }
 
-    public DidAuthFlow(DisclosureRequestService disclosureRequestService, String apiBaseUrl) {
+    public DidAuthFlow(String appId, String appSecret , String apiBaseUrl) {
         DidMapControllerApi didMapControllerApi = new DidMapControllerApi();
         didMappingService = new DidMappingService(didMapControllerApi);
         didTransportsControllerApi = new DidTransportsControllerApi(apiBaseUrl);
-        this.disclosureRequestService = disclosureRequestService;
+        this.disclosureRequestService = new DisclosureRequestService(appId, appSecret);
     }
 
     public String dispatchLoginRequest(String appId, String userId, String callbackUrl) throws IOException, InterruptedException, UserNotFoundException {

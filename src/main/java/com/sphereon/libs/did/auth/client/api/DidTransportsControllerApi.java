@@ -24,7 +24,9 @@ public class DidTransportsControllerApi {
     }
 
     public DidTransportsControllerApi(String apiBaseUrl) {
-        httpClient = HttpClient.newHttpClient();
+        httpClient = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_1_1)
+                .build();
         this.apiBaseUrl = apiBaseUrl;
         objectMapper = new ObjectMapper();
     }
