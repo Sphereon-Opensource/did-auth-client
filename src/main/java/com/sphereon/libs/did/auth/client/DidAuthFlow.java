@@ -24,7 +24,7 @@ public class DidAuthFlow {
     private final DidMappingService didMappingService;
     private final DidTransportsControllerApi didTransportsControllerApi;
     private final DisclosureRequestService disclosureRequestService;
-    private ITimeProvider timeProvider;
+    private final ITimeProvider timeProvider;
 
     public DidAuthFlow(DidMappingService didMappingService, DidTransportsControllerApi didTransportsControllerApi, DisclosureRequestService disclosureRequestService) {
         this.didMappingService = didMappingService;
@@ -47,10 +47,11 @@ public class DidAuthFlow {
         apiClient.setHost(url.getHost());
         apiClient.setPort(url.getPort() > 0 ? url.getPort() : -1); // -1 here is handled by the SDK as no port
         apiClient.setBasePath(url.getPath());
-        DidMapControllerApi didMapControllerApi = new DidMapControllerApi(apiClient);
+        final var didMapControllerApi = new DidMapControllerApi(apiClient);
         this.didMappingService = new DidMappingService(didMapControllerApi);
         this.didTransportsControllerApi = new DidTransportsControllerApi(transportApiUrl);
         this.disclosureRequestService = new DisclosureRequestService(appId, appSecret);
+        this.timeProvider = SystemTimeProvider.INSTANCE;
     }
 
     public String dispatchLoginRequest(String appId, String userId, String callbackUrl) throws IOException, InterruptedException, UserNotFoundException {
