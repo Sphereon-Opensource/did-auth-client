@@ -26,13 +26,6 @@ public class DidAuthFlow {
     private final DisclosureRequestService disclosureRequestService;
     private final ITimeProvider timeProvider;
 
-    public DidAuthFlow(DidMappingService didMappingService, DidTransportsControllerApi didTransportsControllerApi, DisclosureRequestService disclosureRequestService) {
-        this.didMappingService = didMappingService;
-        this.didTransportsControllerApi = didTransportsControllerApi;
-        this.disclosureRequestService = disclosureRequestService;
-        this.timeProvider = SystemTimeProvider.INSTANCE;
-    }
-
     public DidAuthFlow(DidMappingService didMappingService, DidTransportsControllerApi didTransportsControllerApi, DisclosureRequestService disclosureRequestService, ITimeProvider timeProvider) {
         this.didMappingService = didMappingService;
         this.didTransportsControllerApi = didTransportsControllerApi;
@@ -40,18 +33,12 @@ public class DidAuthFlow {
         this.timeProvider = timeProvider;
     }
 
-    public DidAuthFlow(String appId, String appSecret , String transportApiUrl, String mappingApiUrl) throws MalformedURLException {
-        URL url = new URL(mappingApiUrl);
-        var apiClient = Configuration.getDefaultApiClient();
-        apiClient.setScheme(url.getProtocol());
-        apiClient.setHost(url.getHost());
-        apiClient.setPort(url.getPort() > 0 ? url.getPort() : -1); // -1 here is handled by the SDK as no port
-        apiClient.setBasePath(url.getPath());
-        final var didMapControllerApi = new DidMapControllerApi(apiClient);
-        this.didMappingService = new DidMappingService(didMapControllerApi);
-        this.didTransportsControllerApi = new DidTransportsControllerApi(transportApiUrl);
-        this.disclosureRequestService = new DisclosureRequestService(appId, appSecret);
-        this.timeProvider = SystemTimeProvider.INSTANCE;
+    public DidAuthFlow(DidMappingService didMappingService, DidTransportsControllerApi didTransportsControllerApi, DisclosureRequestService disclosureRequestService) {
+        this(didMappingService, didTransportsControllerApi, disclosureRequestService, SystemTimeProvider.INSTANCE);
+    }
+
+    public DidAuthFlow(String appId, String appSecret, String transportApiUrl, String mappingApiUrl) throws MalformedURLException {
+        this(didMappingServiceFrom(mappingApiUrl), new DidTransportsControllerApi(transportApiUrl), new DisclosureRequestService(appId, appSecret));
     }
 
     public String dispatchLoginRequest(String appId, String userId, String callbackUrl) throws IOException, InterruptedException, UserNotFoundException {
@@ -68,5 +55,15 @@ public class DidAuthFlow {
         assertWellFormedJwtLoginRequest(payload);
         verifyJwtSync(this.timeProvider, payload.getReq(), true, disclosureRequestService.getAppDid());
         return verifyJwtSync(this.timeProvider, jwt, true, disclosureRequestService.getAppDid());
+    }
+
+    private static DidMappingService didMappingServiceFrom(final String mappingApiUrl) throws MalformedURLException {
+        URL url = new URL(mappingApiUrl);
+        var apiClient = Configuration.getDefaultApiClient();
+        apiClient.setScheme(url.getProtocol());
+        apiClient.setHost(url.getHost());
+        apiClient.setPort(url.getPort() > 0 ? url.getPort() : -1); // -1 here is handled by the SDK as no port
+        apiClient.setBasePath(url.getPath());
+        return new DidMappingService(new DidMapControllerApi(apiClient));
     }
 }
