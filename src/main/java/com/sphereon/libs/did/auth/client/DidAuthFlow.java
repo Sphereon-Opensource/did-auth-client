@@ -48,8 +48,8 @@ public class DidAuthFlow {
         apiClient.setPort(url.getPort() > 0 ? url.getPort() : -1); // -1 here is handled by the SDK as no port
         apiClient.setBasePath(url.getPath());
         DidMapControllerApi didMapControllerApi = new DidMapControllerApi(apiClient);
-        didMappingService = new DidMappingService(didMapControllerApi);
-        didTransportsControllerApi = new DidTransportsControllerApi(transportApiUrl);
+        this.didMappingService = new DidMappingService(didMapControllerApi);
+        this.didTransportsControllerApi = new DidTransportsControllerApi(transportApiUrl);
         this.disclosureRequestService = new DisclosureRequestService(appId, appSecret);
     }
 
