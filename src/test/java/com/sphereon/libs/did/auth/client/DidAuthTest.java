@@ -9,8 +9,8 @@ public class DidAuthTest {
 
     @Test
     @Ignore("This is an integration test, for more info, see Java docs")
-    /**
-     * In order to run this test, you must first fill out all variables with "<>" in this class
+    /*
+     * In order to run this test, you must first fill out all variables with "<>" in this method
      * and have both did-mapping-ms and did-transports-ms running with a <userId> and <appId> registered in
      * did-mapping-ms with a valid push token. If everything is successful, this will push a notification
      * to your mobile.
