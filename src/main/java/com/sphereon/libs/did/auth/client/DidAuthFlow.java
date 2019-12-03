@@ -13,6 +13,8 @@ import me.uport.sdk.jwt.model.JwtHeader;
 import me.uport.sdk.jwt.model.JwtPayload;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static com.sphereon.libs.did.auth.client.KUtilsKt.decodeJwtPayload;
 import static com.sphereon.libs.did.auth.client.KUtilsKt.verifyJwtSync;
@@ -38,13 +40,16 @@ public class DidAuthFlow {
         this.timeProvider = timeProvider;
     }
 
-    public DidAuthFlow(String appId, String appSecret , String transportApiBaseUrl, String mappingApiBaseUrl) {
+    public DidAuthFlow(String appId, String appSecret , String transportApiUrl, String mappingApiUrl) throws MalformedURLException {
+        URL url = new URL(mappingApiUrl);
         var apiClient = Configuration.getDefaultApiClient();
-        apiClient.setHost(mappingApiBaseUrl);
-        apiClient.setPort(8090);
+        apiClient.setScheme(url.getProtocol());
+        apiClient.setHost(url.getHost());
+        apiClient.setPort(url.getPort() > 0 ? url.getPort() : -1); // -1 here is handled by the SDK as no port
+        apiClient.setBasePath(url.getPath());
         DidMapControllerApi didMapControllerApi = new DidMapControllerApi(apiClient);
         didMappingService = new DidMappingService(didMapControllerApi);
-        didTransportsControllerApi = new DidTransportsControllerApi(transportApiBaseUrl);
+        didTransportsControllerApi = new DidTransportsControllerApi(transportApiUrl);
         this.disclosureRequestService = new DisclosureRequestService(appId, appSecret);
     }
 
