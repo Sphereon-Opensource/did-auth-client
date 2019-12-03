@@ -1,10 +1,11 @@
-# did-auth-client
+# DID Auth Client Library
+The DID Auth Client combines useful tools for implementing DID authentication into your own login solution. 
 ## Dependencies
-The did-auth-client doesn't seem to resolve dependencies when imported into another project without adding the following to the `build.gradle` of that project.
+When importing the DID Auth Client into your project, add the jitpack repository in your `build.gradle` to be able to resolve all uPort Kotlin dependencies.
 ```groovy
 repositories {
     ...
     maven { url "https://jitpack.io" }
     ...
 }
-``` 
+```
