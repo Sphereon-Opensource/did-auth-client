@@ -28,7 +28,7 @@ public class DidTransportsControllerApi {
                 .version(HttpClient.Version.HTTP_1_1)
                 .build();
         this.apiBaseUrl = apiBaseUrl;
-        objectMapper = new ObjectMapper();
+        this.objectMapper = new ObjectMapper();
     }
 
     public void sendLoginRequest(LoginRequest loginRequest) throws IOException, InterruptedException, FailedTransportsException {
