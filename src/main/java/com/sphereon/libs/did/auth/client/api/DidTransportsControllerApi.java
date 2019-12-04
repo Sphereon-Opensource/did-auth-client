@@ -11,12 +11,11 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class DidTransportsControllerApi {
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final String APPLICATION_JSON = "application/json";
     private HttpClient httpClient;
     private final String apiBaseUrl;
     private ObjectMapper objectMapper;
-
-    private static final String CONTENT_TYPE = "Content-Type";
-    private static final String APPLICATION_JSON = "application/json";
 
     public DidTransportsControllerApi(HttpClient httpClient, String apiBaseUrl, ObjectMapper objectMapper) {
         this.httpClient = httpClient;
@@ -24,7 +23,15 @@ public class DidTransportsControllerApi {
         this.objectMapper = objectMapper;
     }
 
-    public HttpResponse<String> sendLoginRequest(LoginRequest loginRequest) throws IOException, InterruptedException, FailedTransportsException {
+    public DidTransportsControllerApi(String apiBaseUrl) {
+        httpClient = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_1_1)
+                .build();
+        this.apiBaseUrl = apiBaseUrl;
+        this.objectMapper = new ObjectMapper();
+    }
+
+    public void sendLoginRequest(LoginRequest loginRequest) throws IOException, InterruptedException, FailedTransportsException {
         var loginVarPath = "/login";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(apiBaseUrl + loginVarPath))
@@ -33,11 +40,10 @@ public class DidTransportsControllerApi {
                 .build();
 
         HttpResponse<String> resp = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        if(resp.statusCode() != 200){
+        if (resp.statusCode() != 200) {
             var msg = "Dispatch to DID Transports MS failed with HTTP Status code " + resp.statusCode()
                     + " and error message: " + resp.body();
             throw new FailedTransportsException(msg);
         }
-        return resp;
     }
 }
