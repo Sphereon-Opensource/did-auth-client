@@ -37,8 +37,8 @@ public class DidAuthFlow {
         this(didMappingService, didTransportsControllerApi, disclosureRequestService, SystemTimeProvider.INSTANCE);
     }
 
-    public DidAuthFlow(String appId, String appSecret, String transportApiUrl, String mappingApiUrl) throws MalformedURLException {
-        this(didMappingServiceFrom(mappingApiUrl), new DidTransportsControllerApi(transportApiUrl), new DisclosureRequestService(appId, appSecret));
+    public DidAuthFlow(String appDid, String appSecret, String transportApiUrl, String mappingApiUrl) throws MalformedURLException {
+        this(didMappingServiceFrom(mappingApiUrl), new DidTransportsControllerApi(transportApiUrl), new DisclosureRequestService(appDid, appSecret));
     }
 
     public String dispatchLoginRequest(String appId, String userId, String callbackUrl) throws IOException, InterruptedException, UserNotFoundException {
