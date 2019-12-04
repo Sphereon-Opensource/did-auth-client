@@ -8,7 +8,7 @@ import java.io.IOException;
 public class DidAuthTest {
 
     @Test
-    //@Ignore("This is an integration test, for more info, see Java docs")
+    @Ignore("This is an integration test, for more info, see Java docs")
     /*
      * In order to run this test, you must first fill out all variables with "<>" in this method
      * and have both did-mapping-ms and did-transports-ms running with a <userId> and <appId> registered in
