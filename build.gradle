@@ -9,8 +9,6 @@ version '1.0.0-SNAPSHOT'
 // Add to your gradle.properties publish.url.snapshot=https://....
 def snapshotUrl = project.property('publish.url.snapshot')
 def releasesUrl = project.property('publish.url.releases')
-
-//
 def nexusUser = credentials.nexusUser
 def nexusPassword = credentials.nexusPassword
 
