@@ -18,12 +18,20 @@ repositories {
     maven { url "https://jitpack.io" }
     maven { url "https://kotlin.bintray.com/kotlinx" }
     maven {
-        name 'nexus'
+        name "sphereon-opensource-snapshots"
         url "http://nexus.qa.sphereon.com/nexus/repository/sphereon-opensource-snapshots"
     }
     maven {
-        name 'nexus'
+        name "sphereon-opensource-releases"
+        url "http://nexus.qa.sphereon.com/nexus/repository/sphereon-opensource-releases"
+    }
+    maven {
+        name "sphereon-sdk-snapshots"
         url "http://nexus.qa.sphereon.com/nexus/repository/sphereon-sdk-snapshots"
+    }
+    maven {
+        name "sphereon-sdk-releases"
+        url "http://nexus.qa.sphereon.com/nexus/repository/sphereon-sdk-releases"
     }
 }
 
