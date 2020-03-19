@@ -19,11 +19,11 @@ repositories {
     maven { url "https://kotlin.bintray.com/kotlinx" }
     maven {
         name 'nexus'
-        url "http://nexus.qa.sphereon.com/nexus/content/repositories/sphereon-sdk-releases"
+        url "http://nexus.qa.sphereon.com/nexus/repository/sphereon-opensource-snapshots"
     }
     maven {
         name 'nexus'
-        url "http://nexus.qa.sphereon.com/nexus/content/repositories/sphereon-sdk-snapshots"
+        url "http://nexus.qa.sphereon.com/nexus/repository/sphereon-sdk-snapshots"
     }
 }
 
