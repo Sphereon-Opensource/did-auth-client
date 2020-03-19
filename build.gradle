@@ -1,10 +1,16 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.3.50'
     id 'maven-publish'
-    id "org.hibernate.build.maven-repo-auth" version "3.0.0"
+    id 'nu.studer.credentials' version '2.1'
 }
 
 version '1.0.0-SNAPSHOT'
+
+// Add to your gradle.properties did-auth.publish.url.snapshot=https://....
+def snapshotUrl = project.property('did-auth.publish.url.snapshot')
+def releasesUrl = project.property('did-auth.publish.url.releases')
+def nexusUser = credentials.nexusUser
+def nexusPassword = credentials.nexusPassword
 
 repositories {
     jcenter()
@@ -12,12 +18,20 @@ repositories {
     maven { url "https://jitpack.io" }
     maven { url "https://kotlin.bintray.com/kotlinx" }
     maven {
-        name 'nexus'
-        url "http://nexus.qa.sphereon.com/nexus/content/repositories/sphereon-sdk-releases"
+        name "sphereon-opensource-snapshots"
+        url "http://nexus.qa.sphereon.com/nexus/repository/sphereon-opensource-snapshots"
     }
     maven {
-        name 'nexus'
-        url "http://nexus.qa.sphereon.com/nexus/content/repositories/sphereon-sdk-snapshots"
+        name "sphereon-opensource-releases"
+        url "http://nexus.qa.sphereon.com/nexus/repository/sphereon-opensource-releases"
+    }
+    maven {
+        name "sphereon-sdk-snapshots"
+        url "http://nexus.qa.sphereon.com/nexus/repository/sphereon-sdk-snapshots"
+    }
+    maven {
+        name "sphereon-sdk-releases"
+        url "http://nexus.qa.sphereon.com/nexus/repository/sphereon-sdk-releases"
     }
 }
 
@@ -48,9 +62,13 @@ publishing {
         maven {
             name 'nexus'
             if (version.endsWith("SNAPSHOT")) {
-                url "http://nexus.qa.sphereon.com/nexus/content/repositories/sphereon-ms-snapshots"
+                url "${snapshotUrl}"
             } else {
-                url "http://nexus.qa.sphereon.com/nexus/content/repositories/sphereon-ms-releases"
+                url "${releasesUrl}"
+            }
+            credentials {
+                username "$nexusUser"
+                password "$nexusPassword"
             }
         }
     }

@@ -9,3 +9,15 @@ repositories {
     ...
 }
 ```
+
+To be able publish you must setup your Maven repository URLs in your ~/gradle/gradle.properties file.
+```bash
+did-auth.publish.url.snapshot=https://my.nexus.com/nexus/content/repositories/snapshots
+did-auth.publish.url.releases=https://my.nexus.com/nexus/content/repositories/releases
+``` 
+To set the credentials for the repository, execute the following:
+```bash
+gradle addCredentials --key nexusUser --value <insert-your-nexus-username>
+gradle addCredentials --key nexusPassword --value <insert-your-nexus-password>
+``` 
+
