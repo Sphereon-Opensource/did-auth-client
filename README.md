@@ -10,7 +10,7 @@ repositories {
 }
 ```
 
-To be able publish you must set publish.url.snapshot=https://... and/or publish.url.releases=https://... in your gradle.properties
+To be able publish you must set did-auth.publish.url.snapshot=https://... and/or did-auth.publish.url.releases=https://... in your gradle.properties
 To set the credentials for the repository, execute the following:
 ```bash
 gradle addCredentials --key nexusUser --value <insert-your-nexus-username>
