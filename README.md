@@ -9,3 +9,11 @@ repositories {
     ...
 }
 ```
+
+To add publish you can add publish.url.snapshot=https://.... and publish.url.releases=https://.... to your gradle.properties
+To set its credentials execute the following:
+```bash
+gradle addCredentials --key nexusUser --value <insert-your-nexus-username>
+gradle addCredentials --key nexusPassword --value <insert-your-nexus-password>
+``` 
+
