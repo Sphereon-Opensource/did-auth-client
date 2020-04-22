@@ -21,7 +21,7 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 import static org.junit.Assert.assertEquals;
 
 public class DidAuthFlowTest {
-    private static final int DID_MAP_PORT = 8090;
+    private static final int DID_MAP_PORT = 8795;
     private static final int DID_TRANSPORT_PORT = 3001;
     @ClassRule
     public static WireMockClassRule wireMockRuleMapping = new WireMockClassRule(wireMockConfig()
