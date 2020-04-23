@@ -50,8 +50,8 @@ public class DidAuthFlow {
         return disclosureRequestJwt;
     }
 
-    public String dispatchRegistrationRequest(String appId, String callbackUrl) throws IOException, InterruptedException {
-        String disclosureRequestJwt = disclosureRequestService.createDisclosureRequest(timeProvider, callbackUrl);
+    public String dispatchRegistrationRequest(String appId, String registrationId, String callbackUrl) throws IOException, InterruptedException {
+        String disclosureRequestJwt = disclosureRequestService.createDisclosureRequest(timeProvider, appId, registrationId, callbackUrl);
         var registrationRequest = new RegistrationRequest(disclosureRequestJwt);
         return didTransportsControllerApi.sendRegistrationRequest(registrationRequest);
     }

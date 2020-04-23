@@ -21,8 +21,8 @@ public class DisclosureRequestService {
         return createJwtSync(timeProvider, claims, appDid, appSecret);
     }
 
-    public String createDisclosureRequest(ITimeProvider timeProvider, String callbackUrl) {
-        Map<String, Object> claims = generatePayload(callbackUrl);
+    public String createDisclosureRequest(ITimeProvider timeProvider, String appId, String registrationId, String callbackUrl) {
+        Map<String, Object> claims = generatePayload(appId, registrationId, callbackUrl);
         return createJwtSync(timeProvider, claims, appDid, appSecret);
     }
 

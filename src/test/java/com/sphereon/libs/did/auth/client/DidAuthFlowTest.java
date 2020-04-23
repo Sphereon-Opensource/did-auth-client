@@ -9,6 +9,7 @@ import com.sphereon.libs.did.auth.client.exceptions.UserNotFoundException;
 import com.sphereon.sdk.did.mapping.api.DidMapControllerApi;
 import com.sphereon.sdk.did.mapping.handler.Configuration;
 import me.uport.sdk.jwt.InvalidJWTException;
+import org.apache.commons.codec.binary.Base64;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import org.spongycastle.util.encoders.DecoderException;
 
 import java.io.IOException;
 import java.net.http.HttpClient;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.junit.Assert.*;
@@ -121,7 +123,7 @@ public class DidAuthFlowTest {
     @Test
     public void dispatchRegistrationRequest() throws IOException, InterruptedException {
         didAuthFlow = getDidAuthFlowAtTime(1573914893000L);
-        String qrCode = didAuthFlow.dispatchRegistrationRequest("test-application", "test-callback");
+        String qrCode = didAuthFlow.dispatchRegistrationRequest("test-application", generateRegistrationId(), "test-callback");
         assertNotNull(qrCode);
         assertTrue(qrCode.length() > 36);
         assertEquals("data:image/png;charset=utf-8;base64,", qrCode.substring(0, 36));
@@ -129,6 +131,13 @@ public class DidAuthFlowTest {
 
     private DidAuthFlow getDidAuthFlowAtTime(long time) {
         return new DidAuthFlow(didMappingService, didTransportsControllerApi, disclosureRequestService, () -> time);
+    }
+
+    private String generateRegistrationId() {
+        var random = ThreadLocalRandom.current();
+        var buffer = new byte[64];
+        random.nextBytes(buffer);
+        return Base64.encodeBase64String(buffer);
     }
 
 }
