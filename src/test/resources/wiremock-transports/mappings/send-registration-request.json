@@ -1,0 +1,17 @@
+{
+  "request": {
+    "urlPath": "/register",
+    "method": "POST",
+    "headers": {
+      "Content-type": {
+        "equalTo":"application/json"
+      }
+    },
+    "bodyPatterns": [
+    ]
+  },
+  "response": {
+    "status": 200,
+    "body": "data:image/png;charset=utf-8;base64, SfCVfkLpffVqGVo97uzlKPvskx5tHNrSHxRrQ/cMgyg="
+  }
+}

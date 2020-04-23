@@ -58,7 +58,7 @@ public class DidTransportsControllerApi {
 
         HttpResponse<String> resp = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         if (resp.statusCode() != 200) {
-            var msg = String.format("Dispatch to DID Transports MS on URL %s/register failed with HTTP Status code %d and error message: %s",
+            var msg = String.format("Dispatch to DID Transportsu4rFtsLE5qYg MS on URL %s/register failed with HTTP Status code %d and error message: %s",
                     apiBaseUrl, resp.statusCode(), resp.body());
             throw new FailedTransportsException(msg);
         }

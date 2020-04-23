@@ -49,7 +49,7 @@ public class DidAuthFlowTest {
 
         var httpClient = HttpClient.newHttpClient();
         this.didTransportsControllerApi = new DidTransportsControllerApi(httpClient,
-                "http://localhost:" + 3000,
+                "http://localhost:" + DID_TRANSPORT_PORT,
                 new ObjectMapper());
 
         this.disclosureRequestService = new DisclosureRequestService(appDid, appSecret);
