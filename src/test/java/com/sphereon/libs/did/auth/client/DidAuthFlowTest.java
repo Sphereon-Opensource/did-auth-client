@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.net.http.HttpClient;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class DidAuthFlowTest {
     private static final int DID_MAP_PORT = 8795;
@@ -49,7 +49,7 @@ public class DidAuthFlowTest {
 
         var httpClient = HttpClient.newHttpClient();
         this.didTransportsControllerApi = new DidTransportsControllerApi(httpClient,
-                "http://localhost:" + DID_TRANSPORT_PORT,
+                "http://localhost:" + 3000,
                 new ObjectMapper());
 
         this.disclosureRequestService = new DisclosureRequestService(appDid, appSecret);
@@ -116,6 +116,15 @@ public class DidAuthFlowTest {
     @Test(expected = UserNotFoundException.class)
     public void dispatchLoginShouldFailForNonExistentUser() throws IOException, InterruptedException {
         defaultDidAuthFlow.dispatchLoginRequest("test-application", "non-existent-user", "test-callback");
+    }
+
+    @Test
+    public void dispatchRegistrationRequest() throws IOException, InterruptedException {
+        didAuthFlow = getDidAuthFlowAtTime(1573914893000L);
+        String qrCode = didAuthFlow.dispatchRegistrationRequest("test-application", "test-callback");
+        assertNotNull(qrCode);
+        assertTrue(qrCode.length() > 36);
+        assertEquals("data:image/png;charset=utf-8;base64,", qrCode.substring(0, 36));
     }
 
     private DidAuthFlow getDidAuthFlowAtTime(long time) {

@@ -4,6 +4,7 @@ import com.sphereon.libs.did.auth.client.api.DidTransportsControllerApi;
 import com.sphereon.libs.did.auth.client.exceptions.MalformedLoginJwtException;
 import com.sphereon.libs.did.auth.client.exceptions.UserNotFoundException;
 import com.sphereon.libs.did.auth.client.model.LoginRequest;
+import com.sphereon.libs.did.auth.client.model.RegistrationRequest;
 import com.sphereon.sdk.did.mapping.api.DidMapControllerApi;
 import com.sphereon.sdk.did.mapping.handler.Configuration;
 import kotlin.Triple;
@@ -47,6 +48,12 @@ public class DidAuthFlow {
         var loginRequest = new LoginRequest(disclosureRequestJwt, userInfo.getPushToken(), userInfo.getBoxPub());
         didTransportsControllerApi.sendLoginRequest(loginRequest);
         return disclosureRequestJwt;
+    }
+
+    public String dispatchRegistrationRequest(String appId, String callbackUrl) throws IOException, InterruptedException, UserNotFoundException {
+        String disclosureRequestJwt = disclosureRequestService.createDisclosureRequest(timeProvider, callbackUrl);
+        var registrationRequest = new RegistrationRequest(disclosureRequestJwt);
+        return didTransportsControllerApi.sendRegistrationRequest(registrationRequest);
     }
 
     public String verifyLoginToken(String jwt) throws MalformedLoginJwtException {

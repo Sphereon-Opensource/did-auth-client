@@ -52,3 +52,14 @@ fun generatePayload(recipientDid: String, callbackUrl: String): Map<String, Any>
         "type" to "shareReq"
     )
 }
+
+
+fun generatePayload(callbackUrl: String): Map<String, Any> {
+    return mapOf(
+        "claims" to mapOf(
+            "user_info" to ""
+        ),
+        "callback" to callbackUrl,
+        "type" to "shareReq"
+    )
+}
