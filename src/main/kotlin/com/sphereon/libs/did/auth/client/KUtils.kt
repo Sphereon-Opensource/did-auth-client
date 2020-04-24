@@ -43,7 +43,7 @@ fun decodeJwtPayload(jwt: String): Triple<JwtHeader, JwtPayload, ByteArray> {
 }
 
 
-fun generatePayload(recipientDid: String, callbackUrl: String): Map<String, Any> {
+fun generateLoginPayload(recipientDid: String, callbackUrl: String): Map<String, Any> {
     return mapOf(
         "claims" to mapOf(
             "user_info" to mapOf("did" to recipientDid)
@@ -54,14 +54,11 @@ fun generatePayload(recipientDid: String, callbackUrl: String): Map<String, Any>
 }
 
 
-fun generatePayload(appId: String, registrationId: String, callbackUrl: String): Map<String, Any> {
+fun generateRegistrationPayload(registrationId: String, callbackUrl: String): Map<String, Any> {
     return mapOf(
-        "claims" to mapOf(
-            "user_info" to "",
-            "appId" to appId,
-            "registrationId" to registrationId
+        "claim" to mapOf(
+            "user_info"  to mapOf("registrationId" to registrationId)
         ),
-        "callback" to callbackUrl,
-        "type" to "shareReq"
+        "callback" to callbackUrl
     )
 }

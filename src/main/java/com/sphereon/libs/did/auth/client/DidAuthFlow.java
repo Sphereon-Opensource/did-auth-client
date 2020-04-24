@@ -1,7 +1,7 @@
 package com.sphereon.libs.did.auth.client;
 
 import com.sphereon.libs.did.auth.client.api.DidTransportsControllerApi;
-import com.sphereon.libs.did.auth.client.exceptions.MalformedLoginJwtException;
+import com.sphereon.libs.did.auth.client.exceptions.MalformedJwtException;
 import com.sphereon.libs.did.auth.client.exceptions.UserNotFoundException;
 import com.sphereon.libs.did.auth.client.model.LoginRequest;
 import com.sphereon.libs.did.auth.client.model.RegistrationRequest;
@@ -16,10 +16,12 @@ import me.uport.sdk.jwt.model.JwtPayload;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 import static com.sphereon.libs.did.auth.client.KUtilsKt.decodeJwtPayload;
 import static com.sphereon.libs.did.auth.client.KUtilsKt.verifyJwtSync;
 import static com.sphereon.libs.did.auth.client.utils.DidAuthUtils.assertWellFormedJwtLoginRequest;
+import static com.sphereon.libs.did.auth.client.utils.DidAuthUtils.assertWellFormedJwtRegistrationRequest;
 
 public class DidAuthFlow {
     private final DidMappingService didMappingService;
@@ -44,19 +46,19 @@ public class DidAuthFlow {
 
     public String dispatchLoginRequest(String appId, String userId, String callbackUrl) throws IOException, InterruptedException, UserNotFoundException {
         var userInfo = didMappingService.getUserInfo(appId, userId);
-        String disclosureRequestJwt = disclosureRequestService.createDisclosureRequest(timeProvider, userInfo.getDid(), callbackUrl);
+        String disclosureRequestJwt = disclosureRequestService.createLoginDisclosureRequest(timeProvider, userInfo.getDid(), callbackUrl);
         var loginRequest = new LoginRequest(disclosureRequestJwt, userInfo.getPushToken(), userInfo.getBoxPub());
         didTransportsControllerApi.sendLoginRequest(loginRequest);
         return disclosureRequestJwt;
     }
 
-    public String dispatchRegistrationRequest(String appId, String registrationId, String callbackUrl) throws IOException, InterruptedException {
-        String disclosureRequestJwt = disclosureRequestService.createDisclosureRequest(timeProvider, appId, registrationId, callbackUrl);
+    public String dispatchRegistrationRequest(String registrationId, String callbackUrl) throws IOException, InterruptedException {
+        String disclosureRequestJwt = disclosureRequestService.createRegistrationDisclosureRequest(timeProvider, registrationId, callbackUrl);
         var registrationRequest = new RegistrationRequest(disclosureRequestJwt);
         return didTransportsControllerApi.sendRegistrationRequest(registrationRequest);
     }
 
-    public String verifyLoginToken(String jwt) throws MalformedLoginJwtException {
+    public String verifyLoginToken(String jwt) throws MalformedJwtException {
         Triple<JwtHeader, JwtPayload, byte[]> decodedJWT = decodeJwtPayload(jwt);
         JwtPayload payload = decodedJWT.getSecond();
         assertWellFormedJwtLoginRequest(payload);
@@ -72,5 +74,13 @@ public class DidAuthFlow {
         apiClient.setPort(url.getPort() > 0 ? url.getPort() : -1); // -1 here is handled by the SDK as no port
         apiClient.setBasePath(url.getPath());
         return new DidMappingService(new DidMapControllerApi(apiClient));
+    }
+
+    public String registrationRequestIdFromJWT(String jwt) throws MalformedJwtException {
+        final Triple<JwtHeader, JwtPayload, byte[]> decodedJWT = decodeJwtPayload(jwt);
+        final var jwtPayload = decodedJWT.getSecond();
+        assertWellFormedJwtRegistrationRequest(jwtPayload);
+        final var userInfoMap = (Map<String, Object>) jwtPayload.getClaims().get("user_info");
+        return (String) userInfoMap.get("registrationId");
     }
 }

@@ -4,8 +4,7 @@ import me.uport.sdk.core.ITimeProvider;
 
 import java.util.Map;
 
-import static com.sphereon.libs.did.auth.client.KUtilsKt.createJwtSync;
-import static com.sphereon.libs.did.auth.client.KUtilsKt.generatePayload;
+import static com.sphereon.libs.did.auth.client.KUtilsKt.*;
 
 public class DisclosureRequestService {
     private final String appDid;
@@ -16,13 +15,13 @@ public class DisclosureRequestService {
         this.appSecret = appSecret;
     }
 
-    public String createDisclosureRequest(ITimeProvider timeProvider, String recipientDid, String callbackUrl) {
-        Map<String, Object> claims = generatePayload(recipientDid, callbackUrl);
+    public String createLoginDisclosureRequest(ITimeProvider timeProvider, String recipientDid, String callbackUrl) {
+        Map<String, Object> claims = generateLoginPayload(recipientDid, callbackUrl);
         return createJwtSync(timeProvider, claims, appDid, appSecret);
     }
 
-    public String createDisclosureRequest(ITimeProvider timeProvider, String appId, String registrationId, String callbackUrl) {
-        Map<String, Object> claims = generatePayload(appId, registrationId, callbackUrl);
+    public String createRegistrationDisclosureRequest(ITimeProvider timeProvider, String registrationId, String callbackUrl) {
+        Map<String, Object> claims = generateRegistrationPayload(registrationId, callbackUrl);
         return createJwtSync(timeProvider, claims, appDid, appSecret);
     }
 
