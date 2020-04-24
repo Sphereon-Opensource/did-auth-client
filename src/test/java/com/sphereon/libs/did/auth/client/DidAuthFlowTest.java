@@ -72,7 +72,7 @@ public class DidAuthFlowTest {
     public void verifyRegistrationIdFromJwtParser() {
         didAuthFlow = getDidAuthFlowAtTime(1573739069000L);
         var jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NkstUiJ9.eyJjbGFpbSI6eyJ1c2VyX2luZm8iOnsicmVnaXN0cmF0aW9uSWQiOiJzWmQ3Q1NiUTdjZUpZZXBQcUJFMFpsVWY5Q0FWL1BGeXVUcmlZUjV3TnVjRzgyS3J4WktIaUpvTUkwMkhCT2FSVTRqVXp3cWp5V29jcnlIeExuaUw0Zz09In19LCJjYWxsYmFjayI6InRlc3QtY2FsbGJhY2siLCJpYXQiOjE1NzM5MTQ4OTMsImV4cCI6MTU3MzkxNTE5MywiaXNzIjoiZGlkOmV0aHI6MHg4OGVkNjk0ZmZlOTI0NGUyOTkzZDI5MzI2MzhhNWM3MzYzNzFmYzA0In0.sFVw4lHQg_DrmrkpcxzYB-dfci6DdnmmwiCuAjzPLtykB8eXXUTnZNXNIUYETWQvYu-JQ3DWuW2ARELgsCws6AA";
-        String payload = didAuthFlow.registrationRequestIdFromJWT(jwt);
+        String payload = didAuthFlow.registrationRequestIdFromToken(jwt);
         assert (payload != null);
         assertEquals("sZd7CSbQ7ceJYepPqBE0ZlUf9CAV/PFyuTriYR5wNucG82KrxZKHiJoMI02HBOaRU4jUzwqjyWocryHxLniL4g==", payload);
     }

@@ -5,6 +5,7 @@ import com.sphereon.libs.did.auth.client.exceptions.MalformedJwtException;
 import com.sphereon.libs.did.auth.client.exceptions.UserNotFoundException;
 import com.sphereon.libs.did.auth.client.model.LoginRequest;
 import com.sphereon.libs.did.auth.client.model.RegistrationRequest;
+import com.sphereon.libs.did.auth.client.model.UserInfo;
 import com.sphereon.sdk.did.mapping.api.DidMapControllerApi;
 import com.sphereon.sdk.did.mapping.handler.Configuration;
 import kotlin.Triple;
@@ -76,11 +77,16 @@ public class DidAuthFlow {
         return new DidMappingService(new DidMapControllerApi(apiClient));
     }
 
-    public String registrationRequestIdFromJWT(String jwt) throws MalformedJwtException {
-        final Triple<JwtHeader, JwtPayload, byte[]> decodedJWT = decodeJwtPayload(jwt);
+    public String registrationRequestIdFromToken(String token) throws MalformedJwtException {
+        final Triple<JwtHeader, JwtPayload, byte[]> decodedJWT = decodeJwtPayload(token);
         final var jwtPayload = decodedJWT.getSecond();
         assertWellFormedJwtRegistrationRequest(jwtPayload);
         final var userInfoMap = (Map<String, Object>) jwtPayload.getClaims().get("user_info");
         return (String) userInfoMap.get("registrationId");
+    }
+
+    // TODO Test coverage
+    public void registerDidMapping(String applicationId, String userId, UserInfo userInfo) {
+        didMappingService.storeDidMapping(applicationId, userId, userInfo);
     }
 }

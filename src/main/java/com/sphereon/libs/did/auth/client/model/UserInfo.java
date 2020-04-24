@@ -22,4 +22,6 @@ public class UserInfo {
     public String getDid() {
         return did;
     }
+
+
 }

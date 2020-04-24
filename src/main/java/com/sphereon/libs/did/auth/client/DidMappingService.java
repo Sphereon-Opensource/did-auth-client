@@ -1,10 +1,13 @@
 package com.sphereon.libs.did.auth.client;
 
+import com.sphereon.libs.did.auth.client.exceptions.StoreDidMappingException;
 import com.sphereon.libs.did.auth.client.exceptions.UserNotFoundException;
 import com.sphereon.libs.did.auth.client.model.UserInfo;
 import com.sphereon.sdk.did.mapping.api.DidMapControllerApi;
 import com.sphereon.sdk.did.mapping.handler.ApiException;
 import com.sphereon.sdk.did.mapping.model.DidInfo;
+import com.sphereon.sdk.did.mapping.model.DidMap;
+import com.sphereon.sdk.did.mapping.model.DidMappingRequest;
 import com.sphereon.sdk.did.mapping.model.DidMappingResponse;
 
 public class DidMappingService {
@@ -27,6 +30,23 @@ public class DidMappingService {
             return new UserInfo(didInfo.getDid(), didInfo.getBoxPub(), didInfo.getPushToken());
         } catch (ApiException e) {
             throw new UserNotFoundException(e.getMessage());
+        }
+    }
+
+
+    public void storeDidMapping(String applicationId, String userId, UserInfo userInfo) throws UserNotFoundException {
+        try {
+            final var didMappingRequest = new DidMappingRequest()
+                    .addDidMapsItem(new DidMap()
+                            .applicationId(applicationId)
+                            .userId(userId)
+                            .didInfo(new DidInfo()
+                                    .did(userInfo.getDid())
+                                    .boxPub(userInfo.getBoxPub())
+                                    .pushToken(userInfo.getPushToken())));
+            didMapControllerApi.storeDidMaps(didMappingRequest);
+        } catch (ApiException e) {
+            throw new StoreDidMappingException(e.getMessage());
         }
     }
 }
